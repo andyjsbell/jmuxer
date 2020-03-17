@@ -1,8 +1,29 @@
-import * as debug from '../util/debug';
-import { AACParser } from '../parsers/aac.js';
-import { BaseRemuxer } from './base.js';
+const debug = require ('../util/debug');
+const { AACParser } = require('../parsers/aac.js');
+// const { BaseRemuxer } = require('./base.js');
+let track_id = 1;
+class BaseRemuxer {
 
-export class AACRemuxer extends BaseRemuxer {
+    static getTrackID() {
+        return track_id++;
+    }
+    
+    constructor() {
+        this.seq = 1;
+    }
+
+    flush() {
+        this.seq++;
+        this.mp4track.len = 0;
+        this.mp4track.samples = [];
+    }
+
+    isReady() {
+        if (!this.readyToDecode || !this.samples.length) return null;
+        return true;
+    }
+}
+class AACRemuxer extends BaseRemuxer {
 
     constructor() {
         super();

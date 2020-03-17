@@ -1,8 +1,8 @@
-import { ExpGolomb } from '../util/exp-golomb.js';
-import { NALU } from '../util/nalu.js';
-import * as debug from '../util/debug';
+const ExpGolomb = require('../util/exp-golomb.js');
+const NALU = require('../util/nalu.js');
+const debug = require('../util/debug');
 
-export class H264Parser {
+module.exports = class H264Parser {
 
     static extractNALu(buffer) {
         let i = 0,
@@ -276,13 +276,13 @@ export class H264Parser {
                 push = true;
                 break;
             case NALU.AUD:
-                debug.log('AUD - ignoing and disable HD mode for live channel');
+                console.log('AUD - ignoing and disable HD mode for live channel');
                 if (this.remuxer.isHDAvail) {
                     this.remuxer.isHDAvail = false;
                 }
                 break;
             case NALU.SEI:
-                debug.log('SEI - ignoing');
+                console.log('SEI - ignoing');
                 break;
             default:
         }

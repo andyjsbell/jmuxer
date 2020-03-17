@@ -3,7 +3,7 @@
  * taken from: https://github.com/dailymotion/hls.js
  */
 
-export class MP4 {
+module.exports = class MP4 {
     static init() {
         MP4.types = {
             avc1: [], // codingname

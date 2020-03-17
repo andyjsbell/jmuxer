@@ -1,4 +1,4 @@
-export class NALU {
+module.exports = class NALU {
 
     static get NDR() { return 1; }
     static get IDR() { return 5; }

@@ -1,23 +1,24 @@
 let logger;
 let errorLogger;
 
-export function setLogger() {
+module.exports = function setLogger() {
     /*eslint-disable */
     logger = console.log;
     errorLogger = console.error;
     /*eslint-enable */
 }
 
-export function isEnable() {
+module.exports = function isEnable() {
     return logger != null;
 }
 
-export function log(message, ...optionalParams) {
+module.exports = function log(message, ...optionalParams) {
     if (logger) {
         logger(message, ...optionalParams);
     }
 }
-export function error(message, ...optionalParams) {
+
+module.exports = function error(message, ...optionalParams) {
     if (errorLogger) {
         errorLogger(message, ...optionalParams);
     }

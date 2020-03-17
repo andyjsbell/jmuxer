@@ -1,11 +1,11 @@
-export function appendByteArray(buffer1, buffer2) {
+module.exports = function appendByteArray(buffer1, buffer2) {
     let tmp = new Uint8Array((buffer1.byteLength|0) + (buffer2.byteLength|0));
     tmp.set(buffer1, 0);
     tmp.set(buffer2, buffer1.byteLength|0);
     return tmp;
 }
 
-export function secToTime(sec) {
+module.exports = function secToTime(sec) {
     let seconds,
         hours,
         minutes,

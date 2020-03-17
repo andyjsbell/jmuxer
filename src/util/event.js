@@ -1,4 +1,4 @@
-export default class Event {
+module.exports = class Event {
     constructor(type) {
         this.listener = {};
         this.type = type | '';

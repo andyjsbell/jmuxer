@@ -1,8 +1,8 @@
-import * as debug from '../util/debug';
-import { H264Parser } from '../parsers/h264.js';
-import { BaseRemuxer } from './base.js';
+const debug = require ('../util/debug');
+const H264Parser = require ('../parsers/h264.js');
+const BaseRemuxer = require('./base.js');
 
-export class H264Remuxer extends BaseRemuxer {
+module.exports = class H264Remuxer extends BaseRemuxer {
 
     constructor() {
         super();

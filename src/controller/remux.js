@@ -1,11 +1,35 @@
-import * as debug from '../util/debug';
-import { MP4 } from '../util/mp4-generator.js';
-import { AACRemuxer } from '../remuxer/aac.js';
-import { H264Remuxer } from '../remuxer/h264.js';
-import { appendByteArray, secToTime } from '../util/utils.js';
-import Event from '../util/event';
+const {debug} = require('../util/debug');
+const MP4 = require('../util/mp4-generator.js');
+const AACRemuxer = require('../remuxer/aac.js');
+const H264Remuxer = require('../remuxer/h264.js');
+// const { appendByteArray, secToTime } = require ('../util/utils.js');
+const Event = require ('../util/event.js');
+function appendByteArray(buffer1, buffer2) {
+    let tmp = new Uint8Array((buffer1.byteLength|0) + (buffer2.byteLength|0));
+    tmp.set(buffer1, 0);
+    tmp.set(buffer2, buffer1.byteLength|0);
+    return tmp;
+}
 
-export default class RemuxController extends Event {
+function secToTime(sec) {
+    let seconds,
+        hours,
+        minutes,
+        result = '';
+
+    seconds = Math.floor(sec);
+    hours = parseInt(seconds / 3600, 10) % 24;
+    minutes = parseInt(seconds / 60, 10) % 60;
+    seconds = (seconds < 0) ? 0 : seconds % 60;
+
+    if (hours > 0) {
+        result += (hours < 10 ? '0' + hours : hours) + ':';
+    }
+    result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+    return result;
+}
+
+module.exports = class RemuxController extends Event {
 
     constructor(streaming) {
         super('remuxer');
@@ -50,7 +74,7 @@ export default class RemuxController extends Event {
                     };
                     this.dispatch('buffer', data);
                 }
-                debug.log('Initial segment generated.');
+                console.log('Initial segment generated.');
                 this.initialized = true;
             }
         } else {
@@ -68,7 +92,7 @@ export default class RemuxController extends Event {
                     };
                     this.dispatch('buffer', data);
                     let duration = secToTime(track.dts / 1000);
-                    debug.log(`put segment (${type}): ${track.seq} dts: ${track.dts} samples: ${track.mp4track.samples.length} second: ${duration}`);
+                    console.log(`put segment (${type}): ${track.seq} dts: ${track.dts} samples: ${track.mp4track.samples.length} second: ${duration}`);
                     track.flush();
                 }
             }

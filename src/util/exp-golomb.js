@@ -2,7 +2,7 @@
  * Parser for exponential Golomb codes, a variable-bitwidth number encoding scheme used by h264.
 */
 
-export class ExpGolomb {
+module.exports = class ExpGolomb {
 
     constructor(data) {
         this.data = data;

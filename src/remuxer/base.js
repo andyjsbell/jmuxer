@@ -1,7 +1,5 @@
-import * as debug from '../util/debug';
-
 let track_id = 1;
-export class BaseRemuxer {
+module.exports = class BaseRemuxer {
 
     static getTrackID() {
         return track_id++;
